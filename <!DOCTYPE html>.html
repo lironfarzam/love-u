@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Babe and Baby Timer</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+  #calendar, #countdown { display: none; }
+  .button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+  .button:hover { background-color: #45a049; }
+</style>
+</head>
+<body>
+  <div id="welcome">
+    <h1>Babe and Baby</h1>
+    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fweather.com%2Fen-IN%2Findia%2Fscience%2Fnews%2F2023-02-14-difference-between-love-lust-and-attraction&psig=AOvVaw2oHHPiOKLzFG2McTNVRMjz&ust=1714405524114000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCn4big5YUDFQAAAAAdAAAAABAE" alt="./IMG_2752.png">
+    <br><br>
+    <button class="button" onclick="showCalendar()">Go to Calendar</button>
+  </div>
+  
+  <div id="calendar">
+    <input type="datetime-local" id="datetimeInput">
+    <br><br>
+    <button class="button" onclick="setDateTime()">Set Date and Go to Countdown</button>
+  </div>
+  
+  <div id="countdown">
+    <h2>Time Remaining</h2>
+    <div id="time"></div>
+    <br>
+  </div>
+
+<script>
+  function showCalendar() {
+    document.getElementById('welcome').style.display = 'none';
+    document.getElementById('calendar').style.display = 'block';
+  }
+
+  function setDateTime() {
+    const dateInput = document.getElementById('datetimeInput').value;
+    document.getElementById('calendar').style.display = 'none';
+    document.getElementById('countdown').style.display = 'block';
+    startCountdown(dateInput);
+  }
+
+  function startCountdown(endTime) {
+    const x = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = new Date(endTime).getTime() - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("time").innerHTML = days + "d " + hours + "h "
+      + minutes + "m " + seconds + "s ";
+
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").style.display = 'none';
+        document.getElementById('welcome').style.display = 'block';
+        document.getElementById("time").innerHTML = "";
+      }
+    }, 1000);
+  }
+</script>
+</body>
+</html>
